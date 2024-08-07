@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legacylabs character chat.</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0D1117;
+            color: #C9D1D9;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 600px;
+            background-color: #161B22;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .chat-box {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #21262D;
+            border-radius: 8px;
+        }
+        .message {
+            margin: 10px 0;
+            text-align: left;
+        }
+        .message.user {
+            color: #58A6FF;
+        }
+        .message.jarvis {
+            color: #2EA043;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: none;
+        }
+        input {
+            background-color: #21262D;
+            color: #C9D1D9;
+        }
+        button {
+            background-color: #238636;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2EA043;
+        }
+        .clear-chat {
+            background-color: #DA3633;
+            margin-top: 10px;
+        }
+        .clear-chat:hover {
+            background-color: #F85149;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Character chat</h1>
+        <div class="chat-box">
+            {% if chat_history %}
+                {% for entry in chat_history %}
+                    <div class="message {{ entry.role | lower }}">
+                        <strong>{{ entry.role }}:</strong> {{ entry.message }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No messages yet. Start the conversation!</p>
+            {% endif %}
+        </div>
+        <form method="POST">
+            <input type="text" name="message" placeholder="Type your message..." required>
+            <input type="text" name="api_key" placeholder="Enter your API key..." required>
+            <button type="submit">Send</button>
+        </form>
+        <form method="GET" action="/clear">
+            <button class="clear-chat" type="submit">Clear Chat</button>
+        </form>
+    </div>
+</body>
+</html>
